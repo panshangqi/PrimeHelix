@@ -1,0 +1,44 @@
+input{
+    width:60px;
+    height:30px;
+    border: 1px solid #666;
+    margin-left: 8px;
+    text-align: center;
+}
+select{
+    width:120px;
+    height:30px;
+    margin-left: 8px;
+    color:#444;
+    font-size: 16px;
+}
+button{
+    width:60px;
+    height:30px;
+    margin-left: 8px;
+    color:#fff;
+    border-radius: 4px;
+    background-color: #444;
+    border: 0;
+    cursor: pointer;
+}
+.lf30{
+    margin-left: 30px;
+}
+.canvas_bg{
+    width: 600px;
+    height: 600px;
+    border: 1px solid #333333;
+    position: relative;
+}
+.point{
+    position: absolute;
+    left:0;
+    top:0;
+    width:2px;
+    height:2px;
+    background-color:#000;
+}
+.head_bar{
+    height: 150px;
+}
