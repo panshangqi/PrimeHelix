@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>旅行商问题</title>
+    <title>质数螺旋</title>
     <link rel="stylesheet" href="../static/prime.css">
     <style></style>
 </head>
@@ -8,19 +8,19 @@
 <div id="head_bar" class="head_bar">
     <span>底图样式:</span>
     <select id="selector">
-        <option>正方形</option>
-        <option>正三角形</option>
-        <option>正六边形</option>
+        <option  name="square">正方形</option>
+        <option name="triangle">正三角形</option>
+        <option selected name="sexangle">正六边形</option>
     </select>
 
     <span class="lf30">边长单位格:</span>
-    <input/>
+    <input id="side_length_input" value="2"/>
 
     <span class="lf30">数段:</span>
-    <input/> -<input/>
+    <input id="segment_start"/> -<input id="segment_end"/>
 
     <span class="lf30">数段数量:</span>
-    <input/>
+    <input id="segment_count"/>
 
     <button id="create_pictures_btn" style="width:120px;">生成图片</button>
 </div>

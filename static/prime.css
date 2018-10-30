@@ -22,12 +22,13 @@ button{
     border: 0;
     cursor: pointer;
 }
+
 .lf30{
     margin-left: 30px;
 }
 .canvas_bg{
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 700px;
     border: 1px solid #333333;
     position: relative;
 }
@@ -37,8 +38,31 @@ button{
     top:0;
     width:2px;
     height:2px;
-    background-color:#000;
+    background-color:#fff;
+}
+.point img{
+    cursor: pointer;
+}
+.center{
+    position: absolute;
+    left:0;
+    top:0;
+    width:6px;
+    height:6px;
+    z-index: 100;
+    background-color:#fff;
+}
+.number{
+    position: absolute;
+    left:0;
+    top:0;
+    width:6px;
+    height:6px;
+    z-index: 101;
+    color:#000fff;
+    font-size: 40px;
+    cursor: pointer;
 }
 .head_bar{
-    height: 150px;
+    height: 60px;
 }
