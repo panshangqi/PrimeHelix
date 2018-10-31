@@ -29,7 +29,7 @@ button{
 .canvas_bg{
     width: 700px;
     height: 700px;
-    border: 1px solid #333333;
+    border: 1px solid #fff;
     position: relative;
 }
 .point{
@@ -59,10 +59,13 @@ button{
     width:6px;
     height:6px;
     z-index: 101;
-    color:#000fff;
+    color:#000;
     font-size: 40px;
     cursor: pointer;
 }
 .head_bar{
-    height: 60px;
+    height: 80px;
+}
+.btns_box{
+    margin-top: 8px;
 }

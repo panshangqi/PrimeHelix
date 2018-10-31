@@ -1,28 +1,37 @@
 <html>
 <head>
     <title>质数螺旋</title>
-    <link rel="stylesheet" href="../static/prime.css">
+    <link rel="stylesheet" href="../static/prime/prime.css">
     <style></style>
 </head>
 <body>
 <div id="head_bar" class="head_bar">
     <span>底图样式:</span>
     <select id="selector">
-        <option  name="square">正方形</option>
+        <option selected name="square">正方形</option>
         <option name="triangle">正三角形</option>
-        <option selected name="sexangle">正六边形</option>
+        <option name="sexangle">正六边形</option>
     </select>
 
     <span class="lf30">边长单位格:</span>
-    <input id="side_length_input" value="2"/>
+    <input id="side_length_input" value="4"/>
+    <span class="lf30">起始数字:</span>
+    <input id="segment_start" value="0"/>
+    <div style="display: none">
+        <span class="lf30">数段:</span>
+        <input id="segment_start"/> -<input id="segment_end"/>
 
-    <span class="lf30">数段:</span>
-    <input id="segment_start"/> -<input id="segment_end"/>
+        <span class="lf30">数段数量:</span>
+        <input id="segment_count"/>
+    </div>
 
-    <span class="lf30">数段数量:</span>
-    <input id="segment_count"/>
 
-    <button id="create_pictures_btn" style="width:120px;">生成图片</button>
+    <div class="btns_box">
+        <button id="create_pictures_btn" style="width:120px;">生成数字</button>
+        <button id="to_hide_btn" style="width:120px;">一键隐藏</button>
+        <button id="mark_prime_btn" style="width:120px;">标出质数</button>
+    </div>
+
 </div>
 <div id="canvas_bg" class="canvas_bg">
 
@@ -31,5 +40,11 @@
 <script src="../static/jquery-1.8.3.min.js"></script>
 <script src="../static/ui_frame.js"></script>
 <script src="../static/html2canvas.min.js"></script>
-<script src="../static/prime.js"></script>
+<script>
+    var sqrt3 = Math.sqrt(3);
+</script>
+<script src="../static/prime/sexangle.js"></script>
+<script src="../static/prime/triangle.js"></script>
+<script src="../static/prime/square.js"></script>
+<script src="../static/prime/prime.js"></script>
 </html>
