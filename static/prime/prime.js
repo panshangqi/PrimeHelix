@@ -4,7 +4,7 @@ var m_side_length = 4;
 var m_segment_start = 0;
 var m_segment_end = 0;
 var m_segment_count = 0;
-var m_canvas_width = $('#canvas_bg').width();
+var m_canvas_width = $('#canvas_bg').width() - 10;
 var m_points = [];
 var m_rate = 1;
 var m_numbers = [];
@@ -58,3 +58,61 @@ $('#to_hide_btn').on('click', function () {
 $('#mark_prime_btn').on('click',function () {
     markAnglePrime(m_numbers)
 })
+
+//蒙层
+var errorDialogEx = function (ele) {
+    var self = this;
+    self.showDialog = function(){
+        ele.css({'display':'block'});
+        //ele.fadeIn(300);
+    }
+    self.hideDialog = function() {
+        ele.css({'display':'none'});
+    }
+    ele.on('click',function(){
+        ele.css({'display':'none'});
+    })
+}
+
+var exportDialog = new errorDialogEx($('#dialog_ex'));
+//导出图片
+$('#save_picture_btn').click(function(){
+    var This = this;
+    html2canvas(document.getElementById("canvas_bg")).then(function(canvas){
+        /*
+        document.getElementById('export_content').innerHTML = '';
+        var dom = document.getElementById('export_content').appendChild(canvas);
+        dom.setAttribute('id','image');
+        exportDialog.showDialog();
+        */
+        //alert(0)
+        exportDialog.showDialog();
+        document.getElementById('dialog_content').innerHTML = "";
+        var dom = document.getElementById('dialog_content').appendChild(canvas);
+        dom.setAttribute('id','image');
+        console.log(canvas)
+        /*
+        var filename = "teset_tesst.png"
+        This.href=document.getElementById('dialog_content').toDataURL("image/png");
+        This.download = filename;
+        */
+        setTimeout(function () {
+            downloadCanvas(This,'image','旅行商问题图片.png');
+        },450)
+
+        //exportDialog.hideDialog();
+    });
+})
+$('#download_btn').click(function () {
+    downloadCanvas(this,'image','旅行商问题图片.png');
+    exportDialog.hideDialog();
+})
+function downloadCanvas(link,canvasId,filename){
+    link.href=document.getElementById(canvasId).toDataURL("image/png");
+    link.download = filename;
+}
+
+
+
+
+

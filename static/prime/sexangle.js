@@ -165,7 +165,7 @@ function paintAngle6Numbers(helix, numbers){
 
         var fx = num.x;
         var fy = num.y;
-        
+
         var html = '<div class="point" id="point_'+num.value+'" style="left: '+fx+'px; top: '+fy+'px">';
         var width = unit*(1+0.02);
         html += '<img src="../static/img/angle6.png" style="width: '+width+'px"/>';
