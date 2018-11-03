@@ -5,7 +5,7 @@
 import threading
 import jinja2
 from tornado import template
-
+from ui_methods import *
 
 class TTemplate(object):
     def __init__(self, template_instance):
@@ -19,6 +19,7 @@ class JinjaLoader(template.BaseLoader):
     def __init__(self, root_directory, **kwargs):
         self.jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(root_directory), **kwargs)
         self.templates = {}
+        self.jinja_env.globals = ui_methods
         self.lock = threading.RLock()
 
     def resolve_path(self, name, parent_path=None):

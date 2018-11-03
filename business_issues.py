@@ -80,7 +80,7 @@ def main(args):
                                  xsrf_cookies=False,
                                  debug=args.debug)
     server = HTTPServer(application, xheaders=True)
-    server.listen(args.port)
+    server.listen(args.port,'0.0.0.0')
     logger.setup()
     install_tornado_shutdown_handler(tornado.ioloop.IOLoop.instance(), server, logging.getLogger())
     logging.info('start service at ' + time.ctime() + '\n')

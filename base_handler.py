@@ -11,8 +11,11 @@ from tornado.web import HTTPError
 class BaseHandler(RequestHandler):
     def get(self):
         #self.render('drawPoints.html')
-        self.render('prime.html')
+        self.render('prime.html',type="answer")
 
+class QuestionHandler(RequestHandler):
+    def get(self):
+        self.render('prime.html',type='question')
 
 class BaseHandlerWithPath(RequestHandler):
     def get(self):

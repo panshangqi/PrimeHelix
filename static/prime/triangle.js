@@ -170,7 +170,7 @@ function getAngle3Numbers(helix, center){
 }
 
 //渲染数字
-function paintAngle3Numbers(helix, numbers){
+function paintAngle3Numbers(helix, numbers, show){
     var unit = helix.unit;
     var idx = 0;
     var width = 1 * unit;
@@ -187,7 +187,12 @@ function paintAngle3Numbers(helix, numbers){
         var html = '<div class="point" id="point_'+ num.value +'" style="left: '+fx+'px; top: '+fy+'px">';
         var width = unit*(1+0.02);
         html += '<img src="../static/img/angle3.png" class="cell" style="width: '+width+'px"/>';
-        html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        //html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        if(show || idx == 1 || idx == numbers.length)
+            html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        else{
+            html += '<div class="number" style="display:none; left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        }
         html += '</div>'
         $('#canvas_bg').append(html)
     }

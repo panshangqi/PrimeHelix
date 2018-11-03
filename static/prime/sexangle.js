@@ -153,16 +153,16 @@ function getAngle6Numbers(helix, center){
 
 }
 //渲染数字
-function paintAngle6Numbers(helix, numbers){
+function paintAngle6Numbers(helix, numbers, show){
     var unit = helix.unit;
 
     var width = 1 * unit;
     var height = width * 2 * sqrt3 / 3;
     var fontSize = parseInt(unit / 3.5);
     fontSize = fontSize < 8 ? 8 : fontSize;
-
+    var idx = 0;
     for(var num of numbers){
-
+        idx = idx + 1;
         var fx = num.x;
         var fy = num.y;
 
@@ -172,7 +172,12 @@ function paintAngle6Numbers(helix, numbers){
         //var offset_x = 1 * rate / 2;
         //var offset_y = offset_x * 2 * sqrt3 / 3;
         //html += '<div class="center" style="left: '+offset_x+'px; top: '+offset_y+'px"/>';
-        html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        //html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        if(show || idx == 1 || idx == numbers.length)
+            html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        else{
+            html += '<div class="number" style="display:none; left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
+        }
         html += '</div>'
         $('#canvas_bg').append(html)
 
@@ -247,7 +252,7 @@ function paintArrow6(helix, numbers){
 
         var html = '<img src="../static/img/j_0.png" class="jian"/>';
         //-webkit-transform:rotate(270deg);
-
+       // console.log(')))', oft)
         $('#point_' + end.value).append(html);
         $('#point_' + end.value).find('.jian').css({
             '-webkit-transform': 'rotate('+angle+'deg)',

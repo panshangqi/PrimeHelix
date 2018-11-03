@@ -12,26 +12,36 @@
         <option name="triangle">正三角形</option>
         <option name="sexangle">正六边形</option>
     </select>
-
     <span class="lf30">边长单位格:</span>
     <input id="side_length_input" value="4"/>
-    <span class="lf30">起始数字:</span>
-    <input id="segment_start" value="0"/> -<input id="segment_end" value="10"/>
-    <div style="display: none">
+
+    {% if type == 'question' %}
         <span class="lf30">起始数字:</span>
-        <input id="segment_start"/> -<input id="segment_end"/>
+        <input id="segment_start" value="0"/> -<input id="segment_end" value="10"/>
+        <div style="display: none">
+            <span class="lf30">起始数字:</span>
+            <input id="segment_start"/> -<input id="segment_end"/>
 
-        <span class="lf30">数段数量:</span>
-        <input id="segment_count"/>
-    </div>
+            <span class="lf30">数段数量:</span>
+            <input id="segment_count"/>
+        </div>
 
 
-    <div class="btns_box">
-        <button id="create_pictures_btn" style="width:120px;">生成数字</button>
-        <button id="to_hide_btn" style="width:120px;">一键隐藏</button>
-        <button id="mark_prime_btn" style="width:120px;">标出质数</button>
-        <a id="save_picture_btn" class="save_picture_btn" style="width:120px;">另存为图片</a>
-    </div>
+        <div class="btns_box">
+            <button id="create_pictures_btn" style="width:120px;">生成数字</button>
+            <button id="to_hide_btn" style="width:120px;">一键隐藏</button>
+            <button id="mark_prime_btn" style="width:120px;">标出质数</button>
+            <a id="save_picture_btn" class="save_picture_btn" style="width:120px;">另存为图片</a>
+        </div>
+    {% else %}
+        <span class="lf30">起始数字:</span>
+        <input id="segment_start" value="0"/>
+        <div class="btns_box">
+            <button id="start_answer_btn" style="width:120px;">开始作答</button>
+        </div>
+    {% endif %}
+
+
 
 </div>
 <div id="canvas_bg" class="canvas_bg">
@@ -45,6 +55,8 @@
 <script src="../static/ui_frame.js"></script>
 <script src="../static/html2canvas.min.js"></script>
 <script>
+    var type = {{json_encode(type)}}
+    //alert(type)
     var sqrt3 = Math.sqrt(3);
 </script>
 <script src="../static/prime/sexangle.js"></script>
