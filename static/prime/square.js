@@ -157,8 +157,8 @@ function paintAngle4Numbers(helix, numbers){
     var idx = 0;
     var width = 1 * unit;
     var height = width * 2 * sqrt3 / 3;
-    var fontSize = parseInt(unit / 2.5);
-    fontSize = fontSize < 12 ? 12 : fontSize;
+    var fontSize = parseInt(unit / 3.5);
+    //fontSize = fontSize < 12 ? 12 : fontSize;
     $('#canvas_bg').empty();
     for(var num of numbers){
         idx ++;
@@ -168,18 +168,59 @@ function paintAngle4Numbers(helix, numbers){
         //console.log(_x , _y)
         var html = '<div class="point" id="point_'+ num.value +'" style="left: '+fx+'px; top: '+fy+'px">';
         var width = unit*(1+0.02);
-        html += '<img src="../static/img/angle4.png" style="width: '+width+'px"/>';
+        html += '<img src="../static/img/angle4.png" class="cell" style="width: '+width+'px"/>';
+
         html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
         html += '</div>'
         $('#canvas_bg').append(html)
     }
     $('#canvas_bg').find('.number').css({
         width: width + 'px',
-        height: height + 'px',
+        height: width + 'px',
         'text-align': 'center',
-        'line-height': height + 'px',
+        'line-height': width + 'px',
         'font-size': fontSize + 'px'
     })
+
+    paintArrow4(helix, numbers)
+}
+//渲染箭头
+
+function paintArrow4(helix, numbers){
+    $('#canvas_bg').find('.jian').remove();
+    var unit = helix.unit;
+    var imgWidth = unit / 2.4;
+    var dirt = {   //箭头角度
+        '0_1': 0,
+        '-1_0':270,
+        '0_-1': 180,
+        '1_0': 90
+    }
+    //箭头偏移量[left,top]
+    var offset = {
+        '0_1': [-imgWidth/2, unit/2 -imgWidth/2],
+        '-1_0': [unit/2-imgWidth/2, unit-imgWidth/2],
+        '0_-1': [unit - imgWidth/2, unit/2-imgWidth/2],
+        '1_0': [unit/2-imgWidth/2, -imgWidth/2]
+    }
+    for(var i=1;i<numbers.length;i++){
+        var start = numbers[i-1];
+        var end = numbers[i];
+        var ii = end.i - start.i;
+        var jj = end.j - start.j;
+        var angle = dirt[ii+'_'+jj];
+        var html = '<img src="../static/img/j_0.png" class="jian"/>';
+        //-webkit-transform:rotate(270deg);
+        var oft = offset[ii+'_'+jj]
+        $('#point_' + end.value).append(html);
+        $('#point_' + end.value).find('.jian').css({
+            '-webkit-transform': 'rotate('+angle+'deg)',
+            width: imgWidth + 'px',
+            left: oft[0]+'px',
+            top: oft[1] + 'px'
+        })
+    }
+
 }
 //一键隐藏
 function hideAngleNumbers(numbers){
@@ -201,8 +242,8 @@ function markAnglePrime(numbers){
     for(var num of numbers){
         var $point = $('#point_' + num.value)
         var $number = $point.find('.number');
-        var $img = $point.find('img');
-        console.log(num.dst_img)
+        var $img = $point.find('img.cell');
+
         if(isPrime(num.value)){
             $img.attr('src','../static/img/' + num.dst_img)
             $number.css({
@@ -221,6 +262,9 @@ function isPrime(num) {
         return false
     }
     //2是质数
+    if(num == 0 || num == 1){
+        return false
+    }
     if(num == 2) {
         return true
     } else if(num % 2 == 0) {  //排除偶数

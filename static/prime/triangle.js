@@ -175,7 +175,7 @@ function paintAngle3Numbers(helix, numbers){
     var idx = 0;
     var width = 1 * unit;
     var height = width * 2 * sqrt3 / 3;
-    var fontSize = parseInt(unit / 2.5);
+    var fontSize = parseInt(unit / 3.5);
     fontSize = fontSize < 12 ? 12 : fontSize;
 
     for(var num of numbers){
@@ -186,16 +186,56 @@ function paintAngle3Numbers(helix, numbers){
         //console.log(_x , _y)
         var html = '<div class="point" id="point_'+ num.value +'" style="left: '+fx+'px; top: '+fy+'px">';
         var width = unit*(1+0.02);
-        html += '<img src="../static/img/angle3.png" style="width: '+width+'px"/>';
+        html += '<img src="../static/img/angle3.png" class="cell" style="width: '+width+'px"/>';
         html += '<div class="number" style="left: '+0+'px; top: '+0+'px">'+num.value+'</div>';
         html += '</div>'
         $('#canvas_bg').append(html)
     }
     $('#canvas_bg').find('.number').css({
         width: width + 'px',
-        height: height + 'px',
+        height: width + 'px',
         'text-align': 'center',
-        'line-height': height + 'px',
+        'line-height': width + 'px',
         'font-size': fontSize + 'px'
     })
+
+    paintArrow3(helix, numbers)
+}
+
+//渲染箭头
+function paintArrow3(helix, numbers){
+    $('#canvas_bg').find('.jian').remove();
+    var unit = helix.unit;
+    var imgWidth = unit / 2.4;
+    var dirt = {   //箭头角度
+        '0_1': 0,
+        '-1_-1':225,
+        '1_0': 135
+    }
+    //箭头偏移量[left,top]
+    var offset = {
+        '0_1': [-imgWidth/2, unit/2 - imgWidth/2],
+        '-1_-1': [unit*3/4 - imgWidth/2, unit - imgWidth*2/3],
+        //'1_0': [unit/4 - imgWidth/2,  imgWidth*2/3]
+        '1_0': [unit/2, -imgWidth/3]
+    }
+    for(var i=1;i<numbers.length;i++){
+        var start = numbers[i-1];
+        var end = numbers[i];
+        var ii = end.i - start.i;
+        var jj = end.j - start.j;
+        console.log(ii,jj)
+        var angle = dirt[ii+'_'+jj];
+        var html = '<img src="../static/img/j_0.png" class="jian"/>';
+        //-webkit-transform:rotate(270deg);
+        var oft = offset[ii+'_'+jj]
+        $('#point_' + end.value).append(html);
+        $('#point_' + end.value).find('.jian').css({
+            '-webkit-transform': 'rotate('+angle+'deg)',
+            width: imgWidth + 'px',
+            left: oft[0]+'px',
+            top: oft[1] + 'px'
+        })
+    }
+
 }

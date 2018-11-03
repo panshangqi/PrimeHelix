@@ -27,9 +27,9 @@ button{
     margin-left: 30px;
 }
 .canvas_bg{
-    width: 710px;
-    height: 710px;
-    border: 1px solid #fff;
+    width: 910px;
+    height: 910px;
+    border: 1px solid #ffffff00;
     position: relative;
 }
 .point{
@@ -38,10 +38,21 @@ button{
     top:0;
     width:2px;
     height:2px;
-    background-color:#fff;
+    background-color:#ffffff00;
 }
 .point img{
+
+}
+img.cell{
     cursor: pointer;
+}
+img.jian{
+    position: absolute;
+    left:0;
+    top:0;
+    width:100px;
+    -webkit-transform:rotate(270deg);
+    z-index: 101;
 }
 .center{
     position: absolute;
@@ -50,7 +61,7 @@ button{
     width:6px;
     height:6px;
     z-index: 100;
-    background-color:#fff;
+    background-color:#ffffff00;
 }
 .number{
     position: absolute;
@@ -62,6 +73,7 @@ button{
     color:#000;
     font-size: 40px;
     cursor: pointer;
+    transform: scale(0.8);
 }
 .head_bar{
     height: 80px;

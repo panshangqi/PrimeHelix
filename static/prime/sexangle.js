@@ -106,7 +106,7 @@ function getAngle6Numbers(helix, center){
     }
     var ii = center.i;
     var jj = center.j;
-    console.log(ii, jj)
+    //console.log(ii, jj)
     var queue = [];
     center.value = start;
     start++;
@@ -158,8 +158,8 @@ function paintAngle6Numbers(helix, numbers){
 
     var width = 1 * unit;
     var height = width * 2 * sqrt3 / 3;
-    var fontSize = parseInt(unit / 2.5);
-    fontSize = fontSize < 12 ? 12 : fontSize;
+    var fontSize = parseInt(unit / 3.5);
+    fontSize = fontSize < 8 ? 8 : fontSize;
 
     for(var num of numbers){
 
@@ -168,7 +168,7 @@ function paintAngle6Numbers(helix, numbers){
 
         var html = '<div class="point" id="point_'+num.value+'" style="left: '+fx+'px; top: '+fy+'px">';
         var width = unit*(1+0.02);
-        html += '<img src="../static/img/angle6.png" style="width: '+width+'px"/>';
+        html += '<img src="../static/img/angle6.png" class="cell" style="width: '+width+'px"/>';
         //var offset_x = 1 * rate / 2;
         //var offset_y = offset_x * 2 * sqrt3 / 3;
         //html += '<div class="center" style="left: '+offset_x+'px; top: '+offset_y+'px"/>';
@@ -184,8 +184,80 @@ function paintAngle6Numbers(helix, numbers){
         'line-height': height + 'px',
         'font-size': fontSize + 'px'
     })
+
+    paintArrow6(helix, numbers)
 }
 
+//渲染箭头
+function paintArrow6(helix, numbers){
+    $('#canvas_bg').find('.jian').remove();
+    var unit = helix.unit;
+    var imgWidth = unit / 2.4;
+    var dirt = {   //箭头角度
+        '0_1': 0,
+        '-1_-1':240,
+        '0_-1': 180,
+        '1_0': 134,
+        '1_0': 130,
+        '-1_1': 300   //右上角
+    }
+    //箭头偏移量[left,top]
+    /*
+    /*
+           c  2
+      d 3/----\  b  1
+       /      \
+       \      / a  0
+     e 4\____/
+           f  5
+
+    var offset = {
+        0: [-1,1],
+        1: [-1,-1],
+        2: [0,-1],
+        3: [1,0],
+        4: [1,0],
+        5: [0,1]
+    }
+     */
+    var offset = {
+        '0_1': [-imgWidth/2, unit/2-imgWidth/4],
+        '-1_-1': [unit - imgWidth, unit - imgWidth/2],
+        '0_-1': [unit - imgWidth/2,unit/2 - imgWidth/3],
+        '1_0': [unit/2 + imgWidth/5, - imgWidth/9],
+        '-1_1': [imgWidth/4, unit - imgWidth/3]
+    }
+    var oft_bak = [imgWidth/6,-imgWidth/8]
+    for(var i=1;i<numbers.length;i++){
+        var start = numbers[i-1];
+        var end = numbers[i];
+        var ii = end.i - start.i;
+        var jj = end.j - start.j;
+        //console.log(ii,jj)
+        var angle = dirt[ii+'_'+jj];
+        var oft = offset[ii+'_'+jj]
+        if(ii==1&&jj==0){
+            if(end.x < start.x && end.y > start.y){
+
+            }else{
+                angle = 60
+                oft = oft_bak
+            }
+        }
+
+        var html = '<img src="../static/img/j_0.png" class="jian"/>';
+        //-webkit-transform:rotate(270deg);
+
+        $('#point_' + end.value).append(html);
+        $('#point_' + end.value).find('.jian').css({
+            '-webkit-transform': 'rotate('+angle+'deg)',
+            width: imgWidth + 'px',
+            left: oft[0]+'px',
+            top: oft[1] + 'px'
+        })
+    }
+
+}
 
 function pointDis(p1, p2){
     return (p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y);
