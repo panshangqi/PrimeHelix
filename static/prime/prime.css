@@ -12,6 +12,7 @@ select{
     color:#444;
     font-size: 16px;
 }
+/*
 button{
     width:60px;
     height:30px;
@@ -22,7 +23,10 @@ button{
     border: 0;
     cursor: pointer;
 }
-
+*/
+body{
+    padding: 15px;
+}
 .lf30{
     margin-left: 30px;
 }
@@ -31,6 +35,9 @@ button{
     height: 910px;
     border: 1px solid #ffffff00;
     position: relative;
+    margin-top: 10px;
+}
+.canvas_save{
 }
 .point{
     position: absolute;
@@ -77,11 +84,20 @@ img.jian{
     transform: scale(0.8);
     -webkit-user-select: none;
 }
-.head_bar{
+.wrap_prime_html{
     height: 80px;
+    width: 920px;
+    position: absolute;
+    left: 50%;
+    margin-left: -460px;
+}
+.head_bar{
+    min-height: 50px;
+    width: 920px;
 }
 .btns_box{
     margin-top: 8px;
+    vertical-align: top;
 }
 .save_picture_btn{
     vertical-align: top;
@@ -94,6 +110,7 @@ img.jian{
     line-height: 30px;
     border-radius: 4px;
     margin-left: 20px;
+    cursor: pointer;
 }
 .dialog_ex{
     position: fixed;
@@ -114,4 +131,18 @@ img.jian{
     line-height: 260px;
     font-size: 15px;
     color:#555;
+}
+.clock_time{
+    position: absolute;
+    left: 600px;
+    top: 0px;
+    z-index: 120;
+    color:#0277bd;
+    font-size: 20px;
+    font-weight: bold;
+}
+#result_content{
+    tr{
+        height: 35px;
+    }
 }

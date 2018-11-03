@@ -81,7 +81,7 @@ function getAngle3Center(helix){
     for(var i=3;i<=n;i++){
 
         ii += s[k];
-        console.log(ii)
+        //console.log(ii)
         k++;
         k = k % 3;
 
@@ -229,7 +229,7 @@ function paintArrow3(helix, numbers){
         var end = numbers[i];
         var ii = end.i - start.i;
         var jj = end.j - start.j;
-        console.log(ii,jj)
+        //console.log(ii,jj)
         var angle = dirt[ii+'_'+jj];
         var html = '<img src="../static/img/j_0.png" class="jian"/>';
         //-webkit-transform:rotate(270deg);

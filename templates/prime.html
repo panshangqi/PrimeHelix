@@ -1,57 +1,157 @@
-<html>
+<html class="stopwatch-mode">
 <head>
     <title>质数螺旋</title>
     <link rel="stylesheet" href="../static/prime/prime.css">
     <style></style>
+    <link type="text/css" rel="stylesheet" href="../static/bootstrap-4.1.0/dist/css/bootstrap.min.css">
+    <!--link type="text/css" rel="stylesheet" href="../static/clock/assets/materialize/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/clock/assets/css/styles.css">
+    <link type="text/css" rel="stylesheet" href="../static/clock/assets/jonthornton-jquery-timepicker/jquery.timepicker.css"-->
 </head>
-<body>
-<div id="head_bar" class="head_bar">
-    <span>底图样式:</span>
-    <select id="selector">
-        <option selected name="square">正方形</option>
-        <option name="triangle">正三角形</option>
-        <option name="sexangle">正六边形</option>
-    </select>
-    <span class="lf30">边长单位格:</span>
-    <input id="side_length_input" value="4"/>
+<div>
+<div class="wrap_prime_html">
+    <div id="head_bar" class="head_bar">
+        <span>底图样式:</span>
+        <select id="selector">
+            <option selected name="square">正方形</option>
+            <option name="triangle">正三角形</option>
+            <option name="sexangle">正六边形</option>
+        </select>
+        <span class="lf30">边长单位格:</span>
+        <input id="side_length_input" value="4"/>
 
-    {% if type == 'question' %}
-        <span class="lf30">起始数字:</span>
-        <input id="segment_start" value="0"/> -<input id="segment_end" value="10"/>
-        <div style="display: none">
+        {% if type == 'question' %}
             <span class="lf30">起始数字:</span>
-            <input id="segment_start"/> -<input id="segment_end"/>
+            <input id="segment_start" value="0"/> - <input id="segment_end" value="10"/>
+            <div style="display: none">
+                <span class="lf30">起始数字:</span>
+                <input id="segment_start"/>- <input id="segment_end"/>
 
-            <span class="lf30">数段数量:</span>
-            <input id="segment_count"/>
-        </div>
+                <span class="lf30">数段数量:</span>
+                <input id="segment_count"/>
+            </div>
 
+            <span class="btns_box">
+                <button type="button" class="btn btn-primary btn-sm" id="create_pictures_btn" style="width:120px;display: none">生成数字</button>
+                <button type="button" class="btn btn-primary btn-sm" id="to_hide_btn" style="width:120px;display: none" >一键隐藏</button>
+                <button type="button" class="btn btn-primary btn-sm" id="mark_prime_btn" style="width:120px;display: none">标出质数</button>
+                <button type="button" class="btn btn-primary btn-sm" id="convert_data_btn" style="width:120px;margin-left: 15px;margin-top: -5px;">批量生成图片</button>
+            </span>
+        {% else %}
+            <span class="lf30">起始数字:</span>
+            <input id="segment_start" value="0"/>
+            <span class="lf30">计时:</span>
+            <div class="btns_box">
+                <button type="button" class="btn btn-primary btn-sm" id="start_answer_btn" style="width:120px;">开始作答</button>
+                <button type="button" class="btn btn-primary btn-sm" id="submit_answer_btn" style="width:120px;">提交</button>
+            </div>
 
-        <div class="btns_box">
-            <button id="create_pictures_btn" style="width:120px;">生成数字</button>
-            <button id="to_hide_btn" style="width:120px;">一键隐藏</button>
-            <button id="mark_prime_btn" style="width:120px;">标出质数</button>
-            <a id="save_picture_btn" class="save_picture_btn" style="width:120px;">另存为图片</a>
-        </div>
-    {% else %}
-        <span class="lf30">起始数字:</span>
-        <input id="segment_start" value="0"/>
-        <div class="btns_box">
-            <button id="start_answer_btn" style="width:120px;">开始作答</button>
-        </div>
-    {% endif %}
+            <div class="clock_time">
+                <div class="wrapper">
+                    <div class="container stopwatch">
+                        <div style="display: none">
+                            <a id="stopwatch-btn-start" class="waves-effect waves-teal btn-flat">开始</a>
+                            <a id="stopwatch-btn-pause" class="waves-effect waves-teal btn-flat">暂停</a>
+                            <a id="stopwatch-btn-reset" class="waves-effect waves-teal btn-flat">重置</a>
+                        </div>
 
+                        <div class="clock inactive z-depth-1">
 
+                            <span id="time_result">0:00:00.0</span>
+                            <div class="overlay waves-effect"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        {% endif %}
+
+    </div>
+    <div id="canvas_bg" class="canvas_bg">
+
+    </div>
 </div>
-<div id="canvas_bg" class="canvas_bg">
+    <div id="canvas_save" class="canvas_save">
 
-</div>
-<div class="dialog_ex" id="dialog_ex">
-    <div class="dialog_content" id="dialog_content"></div>
-</div>
-</body>
-<script src="../static/jquery-1.8.3.min.js"></script>
+    </div>
+    <div class="dialog_ex" id="dialog_ex">
+        <div class="dialog_content" id="dialog_content"></div>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="resultModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">作答结果</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" id="result_content">
+                    <table>
+                        <tbody>
+                        <!--tr><td width="100">质数总数:</td><td id="all_number"></td></tr-->
+                        <tr><td width="100">正确数量:</td><td id="right_number"></td></tr>
+                        <tr><td>错误数量:</td><td id="error_number"></td></tr>
+                        <tr><td>作答用时:</td><td id="answer_time"></td></tr>
+                        <tr><td>最后得分:</td><td id="answer_score"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">关闭</button-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="downloadModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">图片下载进度</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <div>
+                        <span id="_a">0</span>/<span id="_b">0</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width:0%" id="download_bar"></div>
+                    </div>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <!--button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">关闭</button-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script src="../static/jquery-1.9.1/jquery.min.js"></script>
+<script src="../static/bootstrap-4.1.0/dist/js/bootstrap.min.js"></script>
+
+{% if type != 'question' %}
+<script src="../static/clock/assets/materialize/js/materialize.min.js"></script>
+<script src="../static/clock/assets/jonthornton-jquery-timepicker/jquery.timepicker.min.js"></script>
+<script src="../static/clock/assets/js/hammer.js"></script>
+<script src="../static/clock/assets/js/script.js"></script>
+<!--script src="../static/clock/assets/js/alarm.js"></script-->
+<script src="../static/clock/assets/js/stopwatch.js"></script>
+<!--script src="../static/clock/assets/js/timer.js"></script-->
+{% endif %}
+
 <script src="../static/ui_frame.js"></script>
 <script src="../static/html2canvas.min.js"></script>
 <script>
@@ -63,4 +163,6 @@
 <script src="../static/prime/triangle.js"></script>
 <script src="../static/prime/square.js"></script>
 <script src="../static/prime/prime.js"></script>
+</body>
+
 </html>
