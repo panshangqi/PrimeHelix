@@ -24,6 +24,7 @@ function Angle4Cell(n, width, start){
             index++;
         }
     }
+
     return {points, unit, n, start}
 }
 
@@ -233,7 +234,8 @@ function hideAngleNumbers(numbers){
         if(val == numbers[0].value || val == numbers[numbers.length-1].value){
             $(this).show();
         }else{
-            $(this).fadeOut(300);
+            //$(this).fadeOut(300);
+            $(this).hide()
         }
 
     })
@@ -246,12 +248,25 @@ function markAnglePrime(numbers){
         var $point = $('#point_' + num.value)
         var $number = $point.find('.number');
         var $img = $point.find('img.cell');
-
         if(isPrime(num.value)){
+
             $img.attr('src','../static/img/' + num.dst_img)
+
             $number.css({
                 'color': '#fff'
             })
+            $number.show();
+
+        }else{
+            if(num.value == numbers[0].value || num.value == numbers[numbers.length-1].value){
+                $number.css({
+                    'color': '#000'
+                })
+                $number.show();
+            }else{
+                $number.hide();
+            }
+
         }
 
     }
@@ -260,6 +275,7 @@ function markAnglePrime(numbers){
 
 function isPrime(num) {
     // 不是数字或者数字小于2
+    console.log(typeof num)
     if(typeof num !== "number" || !Number.isInteger(num)) {
         // Number.isInterget 判断是否为整数
         return false

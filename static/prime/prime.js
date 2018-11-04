@@ -20,8 +20,8 @@ $('#start_answer_btn').on('click', function (e) {
     $('#stopwatch-btn-reset').click(); //重置时间
     $('#stopwatch-btn-start').click();
 
-    m_side_length = $('#side_length_input').val();
-    m_segment_start = $('#segment_start').val();
+    m_side_length = parseInt($('#side_length_input').val());
+    m_segment_start = parseInt($('#segment_start').val());
     m_side_length = parseInt(m_side_length)
     console.log('开始作答')
     console.log(m_type, m_side_length,m_segment_start)
@@ -96,10 +96,10 @@ $('#submit_answer_btn').click(function () {
 
 //出题
 $('#create_pictures_btn').on('click', function (e) {
-    m_side_length = $('#side_length_input').val();
-    m_segment_start = $('#segment_start').val();
-    m_segment_end = $('#segment_end').val();
-    m_segment_count = $('#segment_count').val();
+    m_side_length = parseInt($('#side_length_input').val());
+    m_segment_start = parseInt($('#segment_start').val());
+    m_segment_end = parseInt($('#segment_end').val());
+    m_segment_count = parseInt($('#segment_count').val());
     console.log(m_type, m_side_length,m_segment_start,m_segment_end, m_segment_count)
     m_side_length = parseInt(m_side_length)
     if(m_type == 'square'){
@@ -250,6 +250,7 @@ $('#convert_data_btn').click(async function () {
         })
         */
         var filename = m_type + '_' + ki + '_' + (ki + m_numbers.length) + '_hide';
+        $('#canvas_title').html('格子总数：' + m_numbers.length)
         await getDataUrl(filename);
         img_count ++;
         var _process = parseInt(img_count*100 /all_num)
@@ -262,6 +263,7 @@ $('#convert_data_btn').click(async function () {
         markAnglePrime(m_numbers)
 
         filename = m_type + '_' + ki + '_' + (ki + m_numbers.length) + '_mark';
+        $('#canvas_title').html('格子总数：' + m_numbers.length)
         await getDataUrl(filename);
         img_count ++;
         var _process = parseInt(img_count*100 /all_num)
@@ -274,7 +276,7 @@ $('#convert_data_btn').click(async function () {
 
 async function getDataUrl(filename){
     return new Promise(function(resolve, reject){
-        html2canvas(document.getElementById("canvas_bg")).then(function(canvas){
+        html2canvas(document.getElementById("canvas_box")).then(function(canvas){
             var dataURL = canvas.toDataURL('image/png')
             //dataArr.push(dataURL)
             downloadImage(dataURL, filename + '.png')
