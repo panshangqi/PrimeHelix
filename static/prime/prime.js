@@ -208,7 +208,7 @@ $('#convert_data_btn').click(async function () {
     console.log('开始批量生成图片')
     console.log(m_type, m_side_length,m_segment_start,m_segment_end)
 
-    var all_num = (m_segment_end - m_segment_start + 1)*2;
+    var all_num = (m_segment_end - m_segment_start + 1)*3;
     var img_count = 0;
     for(var ki=m_segment_start; ki<=m_segment_end; ki++)
     {
@@ -249,7 +249,7 @@ $('#convert_data_btn').click(async function () {
             downloadImage(dataURL, 'hahaha.png')
         })
         */
-        var filename = m_type + '_' + ki + '_' + (ki + m_numbers.length) + '_hide';
+        var filename = m_type + '_' + ki + '_' + (ki + m_numbers.length -1) + '_hide';
         $('#canvas_title').html('格子总数：' + m_numbers.length)
         await getDataUrl(filename);
         img_count ++;
@@ -258,11 +258,19 @@ $('#convert_data_btn').click(async function () {
         $('#_a').html(img_count);
         $('#_b').html(all_num);
 
+        markAnglePrimeNotBumber(m_numbers)
+        filename = m_type + '_' + ki + '_' + (ki + m_numbers.length-1) + '_mark_no_number';
+        $('#canvas_title').html('格子总数：' + m_numbers.length)
+        await getDataUrl(filename);
+        img_count ++;
+        var _process = parseInt(img_count*100 /all_num)
+        $('#download_bar').css('width',_process+'%')
+        $('#_a').html(img_count);
+        $('#_b').html(all_num);
 
         //标记素数
         markAnglePrime(m_numbers)
-
-        filename = m_type + '_' + ki + '_' + (ki + m_numbers.length) + '_mark';
+        filename = m_type + '_' + ki + '_' + (ki + m_numbers.length-1) + '_mark';
         $('#canvas_title').html('格子总数：' + m_numbers.length)
         await getDataUrl(filename);
         img_count ++;

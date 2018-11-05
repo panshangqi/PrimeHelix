@@ -241,7 +241,7 @@ function hideAngleNumbers(numbers){
     })
 
 }
-//标记素数
+//标记素数并显示素数
 function markAnglePrime(numbers){
 
     for(var num of numbers){
@@ -256,6 +256,40 @@ function markAnglePrime(numbers){
                 'color': '#fff'
             })
             $number.show();
+
+        }else{
+            if(num.value == numbers[0].value || num.value == numbers[numbers.length-1].value){
+                $number.css({
+                    'color': '#000'
+                })
+                $number.show();
+            }else{
+                $number.hide();
+            }
+
+        }
+
+    }
+}
+
+//标记素数不显示素数
+function markAnglePrimeNotBumber(numbers){
+
+    for(var num of numbers){
+        var $point = $('#point_' + num.value)
+        var $number = $point.find('.number');
+        var $img = $point.find('img.cell');
+        if(isPrime(num.value)){
+
+            $img.attr('src','../static/img/' + num.dst_img)
+
+
+            if(num.value == numbers[0].value || num.value == numbers[numbers.length-1].value){
+                $number.css({
+                    'color': '#fff'
+                })
+                $number.show();
+            }
 
         }else{
             if(num.value == numbers[0].value || num.value == numbers[numbers.length-1].value){
